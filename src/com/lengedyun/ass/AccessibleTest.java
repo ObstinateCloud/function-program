@@ -10,12 +10,9 @@ import java.lang.reflect.Field;
  */
 public class AccessibleTest {
 
-    protected int id;
-    protected String name;
+    private int id;
+    private String name;
 
-    public AccessibleTest() {
-
-    }
 
     public int getId() {
         return id;
@@ -33,25 +30,34 @@ public class AccessibleTest {
         this.name = name;
     }
 
-    public static void main(String[] args) {
-        // write your code here
-        Class clazz = null;
-        try {
-            clazz = Class.forName("com.lengedyun.ass.AccessibleTest");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        AccessibleTest at = new AccessibleTest();
-        at.setId(1);
-        at.setName("AT");
-        for (Field f : clazz.getDeclaredFields()) {
-            //f.setAccessible(true);//AccessibleTest类中的成员变量为private,故必须进行此操作
-            try {
-                System.out.println(f.get(at));//获取当前对象中当前Field的value
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+        //场景1 通new构造对象
+        AccessibleTest accessibleTest2 = new AccessibleTest();
+        accessibleTest2.id = 1;
+        accessibleTest2.name = "name";
+
+        Class<AccessibleTest> accessibleTest = (Class<AccessibleTest>) accessibleTest2.getClass();
+
+        //场景2  通过类名创建对象
+//        Class<AccessibleTest> accessibleTest = (Class<AccessibleTest>) Class.forName("com.lengedyun.ass.AccessibleTest");
+//        AccessibleTest accessibleTest2 = accessibleTest.newInstance();
+
+
+        String name = accessibleTest.getName();
+        System.out.println(name);
+        Field[] declaredFields = accessibleTest.getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            declaredField.setAccessible(true);//在其他类中访问私有变量时必须加
+            Object o = declaredField.get(accessibleTest2);
+            if (declaredField.getName().equals("id")) {
+                declaredField.set(accessibleTest2, 100);
+            }
+            if(declaredField.getName().equals("name")){
+                declaredField.set(accessibleTest2,"lenged");
             }
         }
+        System.out.println(accessibleTest2.id+","+accessibleTest2.name);
 
     }
 
