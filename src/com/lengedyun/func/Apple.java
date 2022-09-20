@@ -16,7 +16,7 @@ public class Apple {
 
     private String color;
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
@@ -54,6 +54,13 @@ public class Apple {
     public Apple(int weight, String color) {
         this.weight = weight;
         this.color = color;
+    }
+
+    public Apple() {
+    }
+
+    public Apple(int weight) {
+        this.weight = weight;
     }
 
     @Override

@@ -34,4 +34,5 @@ public class LambdaTest {
 
         runnable.run();
     }
+
 }
