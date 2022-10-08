@@ -33,4 +33,15 @@ public class Transaction {
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
+
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "price=" + price +
+                ", currency=" + currency.toString() +
+                '}';
+    }
+
+
 }
