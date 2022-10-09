@@ -62,6 +62,10 @@ public class StreamTest {
         classes.add(new Student("王九分", 15, new Date(currentTimeMillis - day * 199), false));
     }
 
+    public static List<Student> getStudentList(){
+        return classes;
+    }
+
 
     public static void printStudentList(List<Student> studentList) {
         studentList.forEach(System.out::println);

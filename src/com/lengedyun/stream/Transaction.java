@@ -10,6 +10,8 @@ public class Transaction {
 
     private int price;
 
+    private String city;
+
     private Currency currency;
 
     public Transaction(int price, Currency currency) {
@@ -17,6 +19,11 @@ public class Transaction {
         this.currency = currency;
     }
 
+    public Transaction(int price, String city, Currency currency) {
+        this.price = price;
+        this.city = city;
+        this.currency = currency;
+    }
 
     public int getPrice() {
         return price;
@@ -35,13 +42,20 @@ public class Transaction {
     }
 
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "Transaction{" +
                 "price=" + price +
-                ", currency=" + currency.toString() +
+                ", city='" + city + '\'' +
+                ", currency=" + currency +
                 '}';
     }
-
-
 }
