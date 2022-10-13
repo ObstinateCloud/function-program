@@ -1,7 +1,6 @@
 package com.lengedyun.stream;
 
 import com.lengedyun.stream.bo.Student;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,18 +47,18 @@ public class StreamTest {
     static {
         long currentTimeMillis = System.currentTimeMillis();
         long day = 1000 * 60 * 60 * 24;
-        classes.add(new Student("张三", 12, new Date(currentTimeMillis - day * 287), true));
-        classes.add(new Student("李四", 12, new Date(currentTimeMillis - day * 231), true));
-        classes.add(new Student("张三三", 43, new Date(currentTimeMillis - day * 125), false));
-        classes.add(new Student("张三峰", 31, new Date(currentTimeMillis - day * 169), false));
-        classes.add(new Student("王五", 17, new Date(currentTimeMillis - day * 12), true));
-        classes.add(new Student("赵六", 8, new Date(currentTimeMillis - day * 125), true));
-        classes.add(new Student("马七", 15, new Date(currentTimeMillis - day * 165), false));
-        classes.add(new Student("马七", 25, new Date(currentTimeMillis - day * 165), false));
-        classes.add(new Student("杨八姐", 32, new Date(currentTimeMillis - day * 95), false));
-        classes.add(new Student("李四海", 22, new Date(currentTimeMillis - day * 201), false));
-        classes.add(new Student("王九分", 15, new Date(currentTimeMillis - day * 20), true));
-        classes.add(new Student("王九分", 15, new Date(currentTimeMillis - day * 199), false));
+        classes.add(new Student("张三", 12, new Date(currentTimeMillis - day * 287), true, "足球"));
+        classes.add(new Student("李四", 12, new Date(currentTimeMillis - day * 231), true, "足球"));
+        classes.add(new Student("张三三", 43, new Date(currentTimeMillis - day * 125), false, "足球"));
+        classes.add(new Student("张三峰", 31, new Date(currentTimeMillis - day * 169), false, "乒乓球"));
+        classes.add(new Student("王五", 17, new Date(currentTimeMillis - day * 12), true, "乒乓球"));
+        classes.add(new Student("赵六", 8, new Date(currentTimeMillis - day * 125), true, "乒乓球"));
+        classes.add(new Student("马七", 15, new Date(currentTimeMillis - day * 165), false, "羽毛球"));
+        classes.add(new Student("马七", 25, new Date(currentTimeMillis - day * 165), false, "足球"));
+        classes.add(new Student("杨八姐", 32, new Date(currentTimeMillis - day * 95), false, "羽毛球"));
+        classes.add(new Student("李四海", 22, new Date(currentTimeMillis - day * 201), false, "篮球"));
+        classes.add(new Student("王九分", 15, new Date(currentTimeMillis - day * 20), true, "足球"));
+        classes.add(new Student("王九分", 15, new Date(currentTimeMillis - day * 199), false, "篮球"));
     }
 
     public static List<Student> getStudentList(){
