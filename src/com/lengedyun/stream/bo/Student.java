@@ -19,11 +19,14 @@ public class Student {
 
     private final boolean man;
 
-    public Student(String name, int age, Date birth, boolean man) {
+    private final String hobby;
+
+    public Student(String name, int age, Date birth, boolean man, String hobby) {
         this.name = name;
         this.age = age;
         this.birth = birth;
         this.man = man;
+        this.hobby = hobby;
     }
 
     public String getName() {
@@ -55,6 +58,11 @@ public class Student {
         return man;
     }
 
+
+    public String getHobby() {
+        return hobby;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -62,6 +70,7 @@ public class Student {
                 ", age=" + age +
                 ", birth=" + birth +
                 ", man=" + man +
+                ", hobby='" + hobby + '\'' +
                 '}';
     }
 }

@@ -18,28 +18,43 @@ public class CustomCollector {
 
 
     public static void main(String[] args) {
-        commonImpl(1000);
+//        commonImpl(1000);
+        customImpl(1000);
     }
 
     //打印前n个数中的质数
     //计算从2到n的平方根做除数的数 中是否有能被n整除的数据
     public static void commonImpl(int n){
         Map<Boolean, List<Integer>> collect = IntStream.rangeClosed(2, n).boxed()
-                .collect(Collectors.partitioningBy(num -> isPrime(num)));
+                .collect(Collectors.partitioningBy(num -> n%num==0));
+
+//        Map<Boolean, List<Integer>> collect = IntStream.rangeClosed(2, n).boxed()
+//                .collect(Collectors.partitioningBy(num -> isPrime(num)));
 
         System.out.println(collect.get(true).size());
         System.out.println(collect.get(true).toString());
 
 
     }
-
+    //优化方案 仅查看测试数，小于被测试数平方根，且能否被质数整除 即可
     public static boolean isPrime(int candidate){
         int candidateRoot = (int) Math.sqrt(candidate);
         return IntStream.rangeClosed(2,candidateRoot).noneMatch(i->candidate % i ==0);
 
     }
 
-    //优化方案 仅查看测试数，小于被测试数平方根，且能否被质数整除 即可
+    /**
+     * 使用自定义收集器
+     * @param n
+     */
+    public static void customImpl(int n){
+        Map<Boolean, List<Integer>> collect = IntStream.rangeClosed(2, n).boxed()
+                .collect(new PrimeNumbersCollector());
 
+        System.out.println(collect.get(true).size());
+        System.out.println(collect.get(true).toString());
+
+
+    }
 
 }
