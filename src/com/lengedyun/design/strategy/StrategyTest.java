@@ -1,5 +1,7 @@
 package com.lengedyun.design.strategy;
 
+import java.math.BigDecimal;
+
 /**
  * @title: StrategyTest
  * @description: TODO
@@ -19,10 +21,15 @@ public class StrategyTest {
 
 
 //        lambda写法
-        Validator validator = new Validator((String s) -> s.matches("[a-z]+"));
-        System.out.println(validator.validate("aaaa"));
-        Validator validator2 = new Validator((String s) -> s.matches("\\d+"));
-        System.out.println(validator2.validate("123"));
+//        Validator validator = new Validator((String s) -> s.matches("[a-z]+"));
+//        System.out.println(validator.validate("aaaa"));
+//        Validator validator2 = new Validator((String s) -> s.matches("\\d+"));
+//        System.out.println(validator2.validate("123"));
+
+        BigDecimal zre = new BigDecimal(0);
+        int i = zre.compareTo(BigDecimal.ZERO);
+        System.out.println(i);
+
 
 
     }
