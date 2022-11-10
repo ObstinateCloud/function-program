@@ -2,6 +2,7 @@ package com.lengedyun.completableFuture.betterbuy;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @title: FindBestApp
@@ -32,7 +33,15 @@ public class FindBestApp {
 //        List<String> iphone14ProMax2 = discountServcie.findDiscountPriceAsync("iphone14ProMax");
 //        System.out.println(iphone14ProMax2);
 
-        discountServcie.findDiscountPriceAsyncStream("iphone14ProMax");
+        long start = System.nanoTime();
+
+        CompletableFuture[] iphone14ProMaxes = discountServcie.findDiscountPriceAsyncStream("iphone14ProMax")
+                .map(f -> f.thenAccept(s->System.out.println(s+"(down in "+(System.nanoTime()-start)/100_10000+" ms)")))
+                .toArray(size -> new CompletableFuture[size]);
+
+        CompletableFuture.allOf(iphone14ProMaxes).join();
+
+        System.out.println("all shop return result or time out " +(System.nanoTime()-start)/100_10000+" ms");
 
 
     }

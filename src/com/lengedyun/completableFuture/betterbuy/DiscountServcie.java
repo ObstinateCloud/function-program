@@ -1,10 +1,7 @@
 package com.lengedyun.completableFuture.betterbuy;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -85,31 +82,36 @@ public class DiscountServcie {
 
     //查询折扣价格 异步 返回stream
     public Stream<CompletableFuture<String>> findDiscountPriceAsyncStream(String product){
-        long start = System.nanoTime();
         Stream<CompletableFuture<String>> completableFutureStream = shops.stream()
                 .map(shop -> CompletableFuture.supplyAsync(() -> shop.getPriceDiscount(product), executor)) //异步方式获取shop中商品的价格
                 .map(future -> future.thenApply(Quote::parse))// quote对象存在是对其返回的值进行转换
                 //使用另一个异步任务构造期望的Future 申请折扣， thenCompose对两个CompletableFuture异步线程进行流水线操作 第二步操作依赖第一步操作的结果
-                .map(future -> future.thenCompose(quote -> CompletableFuture.supplyAsync(() -> DiscountServcie.applyDiscount(quote), executor)))
+                .map(future -> future.thenCompose(
+                        quote -> CompletableFuture.supplyAsync(
+                                () -> DiscountServcie.applyDiscount(quote), executor)))
                 ;
-        //每个Future执行完后都打印
-        completableFutureStream.map(stream -> stream.thenAccept(System.out::println));
         return completableFutureStream;
     }
 
 
 
     //查询折扣价格 异步 thenCombine对没有关系的 CompletableFuture整合
-//    public List<String> findDiscountPriceAsync1(String product){
-//        ExchangeRateService exchangeRateService = new ExchangeRateService();
-//
-//        Shop shop = new Shop("A");
-//        CompletableFuture.supplyAsync(() -> shop.getPriceDiscount(product), executor) //异步方式获取shop中商品的价格
-//                .thenCombine(CompletableFuture.supplyAsync(() ->exchangeRateService.getRate(ExchangeRateService.Money.EUR,ExchangeRateService.Money.USD)),(price,rate)->price*rate)
-//        ;
-//
-//        return null;
-//    }
+    public CompletableFuture<Double> thenCombinePrice(String product){
+        ExchangeRateService exchangeRateService = new ExchangeRateService();
+
+        Shop shop = new Shop("A");
+        CompletableFuture<Double> future = CompletableFuture.supplyAsync(() -> shop.getPrice(product), executor) //异步方式获取shop中商品的价格
+                .thenCombine(CompletableFuture.supplyAsync(() -> exchangeRateService.getRate(ExchangeRateService.Money.EUR, ExchangeRateService.Money.USD)), (price, rate) -> price * rate);
+
+        try {
+            System.out.println(future.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return future;
+    }
 
 
 }
